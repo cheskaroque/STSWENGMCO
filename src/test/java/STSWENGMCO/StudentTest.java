@@ -37,6 +37,30 @@ class StudentTest {
         //Then
         assertThrows(ScheduleConflictException.class, () -> student.enlist(sec2));
     }
+    @Test
+    void enlist_in_full_cap(){
+        // Given
+        Section sec1 = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("S11", 5));
+
+        Student student1 = new Student(1);
+        Student student2 = new Student(2);
+        Student student3 = new Student(3);
+        Student student4 = new Student(4);
+        Student student5 = new Student(5);
+
+        // When
+        student1.enlist(sec1);
+        student2.enlist(sec1);
+        student3.enlist(sec1);
+        student4.enlist(sec1);
+        student5.enlist(sec1);
+
+
+        Student student = new Student(6);
+
+        // Then
+        assertThrows(Exception.class,() -> student.enlist(sec1));
+    }
 
     @Test
     void cancel_enlist_section(){
