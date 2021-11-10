@@ -14,8 +14,8 @@ class StudentTest {
     void enlist_two_section_no_conflict(){
         //Given
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("S12", 3));
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("S11", 3));
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("SEC12", 3));
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("SEC11", 3));
         //When
         student.enlist(sec1);
         student.enlist(sec2);
@@ -30,8 +30,8 @@ class StudentTest {
     void enlist_two_sections_same_schedule() {
         //Given
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("S11", 3));
-        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("S12", 3));
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("SEC11", 3));
+        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("SEC12", 3));
         //When
         student.enlist(sec1);
         //Then
@@ -40,7 +40,7 @@ class StudentTest {
     @Test
     void enlist_in_full_cap(){
         // Given
-        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("S11", 5));
+        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("SEC11", 5));
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -65,8 +65,8 @@ class StudentTest {
     @Test
     void cancel_enlist_section(){
         //Given
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("S12", 3));
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("S11", 3));
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("SEC12", 3));
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("SEC11", 3));
         Student student =  new Student(1);
         //When
         student.enlist(sec1);
@@ -76,5 +76,31 @@ class StudentTest {
                 () -> student.cancelEnlist(sec1),
                 () -> student.cancelEnlist(sec2)
         );
+    }
+
+    @Test
+    void enlist_section_with_slots_left(){
+        // Given
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("SEC15", 7));
+
+        Student student1 = new Student(1);
+        Student student2 = new Student(2);
+        Student student3 = new Student(3);
+        Student student4 = new Student(4);
+
+        // When
+        student1.enlist(sec);
+        student2.enlist(sec);
+        student3.enlist(sec);
+        student4.enlist(sec);
+
+        Student newStudent = new Student(5);
+        newStudent.enlist(sec);
+
+        Student newStudent2 = new Student(6);
+        newStudent2.enlist(sec);
+
+        // Then
+        assertAll(() -> sec.getRoom().checkRoomCapacity());
     }
 }
