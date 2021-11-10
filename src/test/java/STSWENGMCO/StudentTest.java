@@ -13,9 +13,9 @@ class StudentTest {
     @Test
     void enlist_two_section_no_conflict(){
         //Given
-        Student student = new Student(studentNumber:1);
-        Section sec1 = new Section(sectionId: "A", new Schedule(Days.MTH, Period.H0830));
-        Section sec2 = new Section(sectionId: "B", new Schedule(Days.TF, Period.H1000));
+        Student student = new Student(1, Collections.emptyList());
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830));
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000));
         //When
         student.enlist(sec1);
         student.enlist(sec2);
@@ -29,9 +29,9 @@ class StudentTest {
     @Test
     void enlist_two_sections_same_schedule(){
         //Given
-        Student student = new Student(studentNumber: 1, Collections.emptyList());
-        Section sec1 = new Section(sectionId: "A", new Schedule(Days.MTH, Period.H0830));
-        Section sec2 = new Section(sectionId: "B", new Schedule(Days.MTH, Period.H0830));
+        Student student = new Student(1, Collections.emptyList());
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830));
+        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830));
         //When
         student.enlist(sec1);
         //Then
