@@ -1,19 +1,20 @@
 package STSWENGMCO;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
 
-public class Student {
+import static org.apache.commons.lang3.Validate.isTrue;
+import static org.apache.commons.lang3.Validate.notNull;
+
+class Student {
+
     private final int studentNumber;
-    private final Collection <Section> sections =new ArrayList<> ();
+    private final Collection <Section> sections =new HashSet<>();
 
     Student (int studentNumber, Collection <Section> sections) {
-        if (studentNumber < 0) {
-            throw new IllegalArgumentException("studentNumber can't be negative, was: " + studentNumber);
-        }
+        isTrue(studentNumber >= 0,"studentNumber cannot be negative, was:" + studentNumber);
 
-        if (sections == null) {
+
+        if(sections == null){
             throw new NullPointerException("sections can't be null");
         }
 
@@ -22,12 +23,25 @@ public class Student {
         this.sections.removeIf(Objects::isNull);
     }
 
-    void enlist  (Section section) {
-        if(section == null) {
-            throw new NullPointerException ("section can't be null");
-        }
-        sections.add(section);
+    Student(int studentNumber) {
+        this(studentNumber, Collections.emptyList());
     }
+
+    void enlist  (Section newSection) {
+        notNull(sections, "student can't be null");
+        sections.forEach( currSection -> currSection.checkForConflict(newSection) );
+        newSection.getRoom().checkRoomCapacity();
+        sections.add(newSection);
+        newSection.getRoom().addStudentToRoom();
+    }
+
+    void cancelEnlist(Section enlistedSection) {
+        notNull(sections, "sections can't be null");
+        sections.remove(enlistedSection);
+        enlistedSection.getRoom().removeStudentFromRoom();
+    }
+
+    Collection<Section> getSections() { return this.sections; }
 
     @Override
     public String toString() {

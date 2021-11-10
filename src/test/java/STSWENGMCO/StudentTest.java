@@ -2,7 +2,6 @@ package STSWENGMCO;
 
 import org.junit.jupiter.api.*;
 
-import java.time.Period;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +15,7 @@ class StudentTest {
         //Given
         Student student = new Student(studentNumber:1);
         Section sec1 = new Section(sectionId: "A", new Schedule(Days.MTH, Period.H0830));
-        Section sec2 = new Section(sectionId: "B" new Schedule(Days.TF, Period.H1000));
+        Section sec2 = new Section(sectionId: "B", new Schedule(Days.TF, Period.H1000));
         //When
         student.enlist(sec1);
         student.enlist(sec2);
@@ -32,7 +31,7 @@ class StudentTest {
         //Given
         Student student = new Student(studentNumber: 1, Collections.emptyList());
         Section sec1 = new Section(sectionId: "A", new Schedule(Days.MTH, Period.H0830));
-        Section sec2 = new Section(sectionId: "B" new Schedule(Days.MTH, Period.H0830));
+        Section sec2 = new Section(sectionId: "B", new Schedule(Days.MTH, Period.H0830));
         //When
         student.enlist(sec1);
         //Then
