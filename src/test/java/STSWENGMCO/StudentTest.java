@@ -40,7 +40,7 @@ class StudentTest {
     @Test
     void enlist_in_full_cap(){
         // Given
-        Section sec1 = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("S11", 5));
+        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("S11", 5));
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -49,17 +49,17 @@ class StudentTest {
         Student student5 = new Student(5);
 
         // When
-        student1.enlist(sec1);
-        student2.enlist(sec1);
-        student3.enlist(sec1);
-        student4.enlist(sec1);
-        student5.enlist(sec1);
+        student1.enlist(sec);
+        student2.enlist(sec);
+        student3.enlist(sec);
+        student4.enlist(sec);
+        student5.enlist(sec);
 
 
-        Student student = new Student(6);
+        Student newStudent = new Student(6);
 
         // Then
-        assertThrows(Exception.class,() -> student.enlist(sec1));
+        assertThrows(Exception.class,() -> newStudent.enlist(sec));
     }
 
     @Test
