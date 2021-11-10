@@ -32,13 +32,13 @@ class Student {
         sections.forEach( currSection -> currSection.checkForConflict(newSection) );
         newSection.getRoom().checkRoomCapacity();
         sections.add(newSection);
-        newSection.getRoom().addStudentToRoom();
+        newSection.getRoom().addToRoom();
     }
 
     void cancelEnlist(Section enlistedSection) {
         notNull(sections, "sections can't be null");
         sections.remove(enlistedSection);
-        enlistedSection.getRoom().removeStudentFromRoom();
+        enlistedSection.getRoom().removeFromRoom();
     }
 
     Collection<Section> getSections() { return this.sections; }

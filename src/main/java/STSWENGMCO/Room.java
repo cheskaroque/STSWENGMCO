@@ -1,6 +1,5 @@
 package STSWENGMCO;
 
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import java.util.Objects;
@@ -36,15 +35,15 @@ public class Room {
 
     void checkRoomCapacity () {
         if (this.currentCapacity >= maxCapacity) {
-            throw new RuntimeException("Room is full ");
+            throw new RuntimeException("Warning: Full Capacity!");
         }
     }
 
-    public void addStudentToRoom(){
-        this.currentCapacity += 1;
+    public int addToRoom(){
+        return this.currentCapacity++;
     }
 
-    public void removeStudentFromRoom(){
-        this.currentCapacity -= 1;
+    public int removeFromRoom(){
+        return this.currentCapacity--;
     }
 }
