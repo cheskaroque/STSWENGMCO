@@ -1,4 +1,4 @@
 package STSWENGMCO;
 
-public class Main {
+public class Student {
 }
