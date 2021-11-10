@@ -11,16 +11,13 @@ public class Room {
     private final int maxCapacity;
     private int currentCapacity;
 
-    private boolean cancel;
-
-    public Room(String roomName, int maxCapacity, int currentCapacity, boolean cancel) {
+    public Room(String roomName, int maxCapacity) {
         notBlank(roomName, "Please provide room name. Room name cannot be left blank");
         Validate.isTrue(StringUtils.isAlphanumeric(roomName),"Room Name must be in alphanumeric, was: " + roomName);
 
         this.nameOfRoom = roomName;
         this.maxCapacity = maxCapacity;
         this.currentCapacity = 0;
-        this.cancel = false;
     }
 
     @Override

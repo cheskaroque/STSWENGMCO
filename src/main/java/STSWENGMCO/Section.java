@@ -10,7 +10,7 @@ public class Section {
     private final Schedule schedule;
     private Room room;
 
-    Section (String sectionId, Schedule schedule) {
+    Section (String sectionId, Schedule schedule, Room room) {
         notBlank(sectionId, "sectionId can't be null or whitespace");
 
         Validate.isTrue(StringUtils.isAlphanumeric(sectionId),
@@ -24,6 +24,8 @@ public class Section {
 
         this.sectionId = sectionId;
         this.schedule = schedule;
+
+        this.room = room;
     }
 
    /* boolean hasConflict (Section other) {
