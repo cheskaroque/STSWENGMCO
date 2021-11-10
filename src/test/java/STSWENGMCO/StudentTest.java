@@ -27,15 +27,30 @@ class StudentTest {
         );
     }
     @Test
-    void enlist_two_sections_same_schedule(){
+    void enlist_two_sections_same_schedule() {
         //Given
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("S12", 3));
-        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("S11", 3));
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("S11", 3));
+        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("S12", 3));
         //When
         student.enlist(sec1);
         //Then
         assertThrows(ScheduleConflictException.class, () -> student.enlist(sec2));
     }
 
+    @Test
+    void cancel_enlist_section(){
+        //Given
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("S12", 3));
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("S11", 3));
+        Student student =  new Student(1);
+        //When
+        student.enlist(sec1);
+        student.enlist(sec2);
+        //Then
+        assertAll(
+                () -> student.cancelEnlist(sec1),
+                () -> student.cancelEnlist(sec2)
+        );
+    }
 }
