@@ -39,6 +39,14 @@ public class Room {
         }
     }
 
+    public String getNameOfRoom(){
+        return nameOfRoom;
+    }
+
+    public int getMaxCapacity(){
+        return maxCapacity;
+    }
+
     public int addToRoom(){
         return this.currentCapacity++;
     }
