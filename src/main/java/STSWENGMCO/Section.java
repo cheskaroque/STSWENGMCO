@@ -9,8 +9,9 @@ public class Section {
     private final String sectionId;
     private final Schedule schedule;
     private Room room;
+    private Subject subject;//HERE
 
-    Section (String sectionId, Schedule schedule, Room room) {
+    Section (String sectionId, Schedule schedule, Room room, Subject subject) {
         notBlank(sectionId, "sectionId can't be null or whitespace");
 
         Validate.isTrue(StringUtils.isAlphanumeric(sectionId),
@@ -26,6 +27,7 @@ public class Section {
         this.schedule = schedule;
 
         this.room = new Room(room.getNameOfRoom(), room.getMaxCapacity());
+        this.subject = new Subject(subject.getSubjectId(), subject.getIsOneSubject());//HERE
     }
 
    /* boolean hasConflict (Section other) {
@@ -45,6 +47,8 @@ public class Section {
     }*/
 
     public Room getRoom(){ return room; }
+
+    public Subject getSubject(){ return subject;}//HERE
 
     @Override
     public String toString() {

@@ -31,14 +31,17 @@ class Student {
         notNull(sections, "student can't be null");
         sections.forEach( currSection -> currSection.checkForConflict(newSection) );
         newSection.getRoom().checkRoomCapacity();
+        newSection.getSubject().checkSectionHasSubject(newSection.getSubject());//HERE
         sections.add(newSection);
         newSection.getRoom().addToRoom();
+        newSection.getSubject().HasASubject();//HERE
     }
 
     void cancelEnlist(Section enlistedSection) {
         notNull(sections, "sections can't be null");
         sections.remove(enlistedSection);
         enlistedSection.getRoom().removeFromRoom();
+        enlistedSection.getSubject().HasMultipleSubject();//HERE
     }
 
     Collection<Section> getSections() { return this.sections; }
