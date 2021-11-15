@@ -14,7 +14,6 @@ import static org.apache.commons.lang3.Validate.notBlank;
 public class Subject {
     private String subjectId;
     private int isOneSubject;
-    private boolean getSubj;
 
     public Subject(String nameOfSubject, String subjectId){
         notBlank(nameOfSubject, "Please provide subject name. Subject name cannot be left blank");
@@ -23,6 +22,11 @@ public class Subject {
         this.subjectId = subjectId;
         this.isOneSubject = isOneSubject;
     }
+
+    public String toString() {
+        return subjectId;
+    }
+
 
     @Override
     public boolean equals(Object o) {
