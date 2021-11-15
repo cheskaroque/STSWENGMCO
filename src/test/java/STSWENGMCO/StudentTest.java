@@ -103,4 +103,19 @@ class StudentTest {
         // Then
         assertAll(() -> sec.getRoom().checkRoomCapacity());
     }
+
+    @Test
+    void enlist_students_at_capacity_in_two_sections_sharing_the_same_room() {
+        // Given 2 sections that share same room w/ capacity 1, and 2 students
+        final int CAPACITY = 1;
+        Room room = new Room("SEC11", CAPACITY);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), room);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H0830), room);
+        Student student1 = new Student(1);
+        Student student2 = new Student(2);
+        // When each student enlists in a different section
+        student1.enlist(sec1);
+        student2.enlist(sec2);
+        // No exception should be thrown
+    }
 }
