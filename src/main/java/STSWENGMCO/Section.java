@@ -6,33 +6,28 @@ import org.apache.commons.lang3.Validate;
 import static org.apache.commons.lang3.Validate.notBlank;
 public class Section {
 
+
     private final String sectionId;
     private final Schedule schedule;
     private Room room;
-    private Subject subject;//HERE
+    private Subject subjectId;
+
 
     Section (String sectionId, Schedule schedule, Room room, Subject subject) {
         notBlank(sectionId, "sectionId can't be null or whitespace");
+
 
         Validate.isTrue(StringUtils.isAlphanumeric(sectionId),
                 "sectionId must be alphanumeric, was: " + sectionId
         );
 
-
-		/*if (!StringUtils.isAlphanumeric(sectionId)) {
-			throw new IllegalArgumentException("section must be alphanumeric, was: " + sectionId);
-		}*/
-
         this.sectionId = sectionId;
         this.schedule = schedule;
+        this.subjectId = subject;
 
         this.room = new Room(room.getNameOfRoom(), room.getMaxCapacity());
-        this.subject = new Subject(subject.getSubjectId(), subject.getIsOneSubject());//HERE
     }
 
-   /* boolean hasConflict (Section other) {
-        return this.schedule.equals(other.schedule);
-    }*/
 
     void checkForConflict(Section other) {
         if (this.schedule.equals(other.schedule)) {
@@ -40,15 +35,15 @@ public class Section {
                     "schedule conflict between current section" + this + " and new section" +
                             other + "at schedule" + this.schedule);
         }
+
+        if (this.subjectId.equals(other.subjectId)) {
+            throw new SubjectConflictException(
+                    "SubjectID " +
+                            other.subjectId + "  conflict with another section");
+        }
     }
-
-   /* Schedule getSchedule() {
-        return schedule;
-    }*/
-
     public Room getRoom(){ return room; }
 
-    public Subject getSubject(){ return subject;}//HERE
 
     @Override
     public String toString() {

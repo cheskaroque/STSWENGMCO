@@ -13,14 +13,12 @@ import static org.apache.commons.lang3.Validate.notBlank;
 
 public class Subject {
     private String subjectId;
-    private boolean isOneSubject;//HERE
 
-    public Subject(String subjectId, boolean isOneSubject){
-        notBlank(subjectId, "Please provide subject name. Subject name cannot be left blank");
+    public Subject(String subjectId){
+        //notBlank(subjectId, "Please provide subject name. Subject name cannot be left blank");
         Validate.isTrue(StringUtils.isAlphanumeric(subjectId),"Subject Name must be in alphanumeric, was: " + subjectId);
 
         this.subjectId = subjectId;
-        this.isOneSubject = isOneSubject;
     }
 
     public String toString(){
@@ -37,30 +35,10 @@ public class Subject {
         return subjectId != null ? subjectId.equals(subject.subjectId) : subject.subjectId == null;
     }
 
+
     @Override
     public int hashCode() {
+        // return Objects.hash(subjectId);
         return subjectId != null ? subjectId.hashCode() : 0;
-    }
-
-    public String getSubjectId() {//HERE
-        return subjectId;
-    }
-
-    public boolean getIsOneSubject() {//HERE
-        return isOneSubject;
-    }
-
-    void checkSectionHasSubject(Subject other) {//HERE
-        if (!this.isOneSubject) {
-            throw new SubjectConflictException(
-                    "section conflict between current section " + this + " and new section " +
-                            other + " at schedule " + this.subjectId);
-        }
-    }
-    public boolean HasASubject(){//HERE
-        return this.isOneSubject = true;
-    }
-    public boolean HasMultipleSubject(){//HERE
-        return this.isOneSubject = false;
     }
 }

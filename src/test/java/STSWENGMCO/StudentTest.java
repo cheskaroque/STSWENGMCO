@@ -14,8 +14,9 @@ class StudentTest {
     void enlist_two_section_no_conflict(){
         //Given
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("SEC12", 3),new Subject("CCPROG2",true));//HERE
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("SEC11", 3),new Subject("CCPROG1",true));//HERE
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("SEC12", 3), new Subject("SWENG"));
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("SEC11", 3), new Subject("stweng"));
+
         //When
         student.enlist(sec1);
         student.enlist(sec2);

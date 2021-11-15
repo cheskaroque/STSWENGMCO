@@ -9,6 +9,7 @@ class Student {
 
     private final int studentNumber;
     private final Collection <Section> sections =new HashSet<>();
+    private final Collection <Subject> subjects =new HashSet<>();
 
     Student (int studentNumber, Collection <Section> sections) {
         isTrue(studentNumber >= 0,"studentNumber cannot be negative, was:" + studentNumber);
@@ -23,25 +24,24 @@ class Student {
         this.sections.removeIf(Objects::isNull);
     }
 
+
     Student(int studentNumber) {
         this(studentNumber, Collections.emptyList());
     }
 
     void enlist  (Section newSection) {
         notNull(sections, "student can't be null");
-        sections.forEach( currSection -> currSection.checkForConflict(newSection) );
+        sections.forEach( currSection -> currSection.checkForConflict(newSection));
         newSection.getRoom().checkRoomCapacity();
-        newSection.getSubject().checkSectionHasSubject(newSection.getSubject());//HERE
         sections.add(newSection);
         newSection.getRoom().addToRoom();
-        newSection.getSubject().HasASubject();//HERE
+
     }
 
     void cancelEnlist(Section enlistedSection) {
         notNull(sections, "sections can't be null");
         sections.remove(enlistedSection);
         enlistedSection.getRoom().removeFromRoom();
-        enlistedSection.getSubject().HasMultipleSubject();//HERE
     }
 
     Collection<Section> getSections() { return this.sections; }
