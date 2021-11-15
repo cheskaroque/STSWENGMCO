@@ -2,48 +2,56 @@ package STSWENGMCO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import java.util.Objects;
+
 import static org.apache.commons.lang3.Validate.notBlank;
 
 public class Room {
     private String nameOfRoom;
-    private final int maxCapacity;
-    private int currentCapacity;
+    private final int maxCap;
+    private int currCap;
 
-    public Room(String roomName, int maxCapacity) {
-        notBlank(roomName, "Please provide room name. Room name cannot be left blank");
-        Validate.isTrue(StringUtils.isAlphanumeric(roomName),"Room Name must be in alphanumeric, was: " + roomName);
+    public Room(String nameOfRoom, int maxCap) {
+        notBlank(nameOfRoom, "Please provide room name. Room name cannot be left blank");
+        Validate.isTrue(StringUtils.isAlphanumeric(nameOfRoom),"Room Name must be in alphanumeric, was: " + nameOfRoom);
 
-        this.nameOfRoom = roomName;
-        this.maxCapacity = maxCapacity;
-        this.currentCapacity = 0;
+        this.nameOfRoom = nameOfRoom;
+        this.maxCap = maxCap;
+        this.currCap = 0;
+    }
+
+    @Override
+    public String toString() {
+        return nameOfRoom;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Room room = (Room) o;
-        return nameOfRoom.equals(room.nameOfRoom);
+
+        return nameOfRoom != null ? nameOfRoom.equals(room.nameOfRoom) : room.nameOfRoom == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameOfRoom);
+        return nameOfRoom != null ? nameOfRoom.hashCode() : 0;
     }
 
 
+
     void checkRoomCapacity () {
-        if (this.currentCapacity >= maxCapacity) {
+        if (this.currCap >= maxCap) {
             throw new RuntimeException("Warning: Full Capacity!");
         }
     }
 
     public int addToRoom(){
-        return this.currentCapacity++;
+        return this.currCap++;
     }
 
     public int removeFromRoom(){
-        return this.currentCapacity--;
+        return this.currCap--;
     }
 }
