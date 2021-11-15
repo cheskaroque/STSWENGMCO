@@ -52,7 +52,7 @@ public class Room {
     }
 
     public int getMaxCapacity(){
-        return maxCapacity;
+        return maxCap;
     }
 
     public int addToRoom(){
