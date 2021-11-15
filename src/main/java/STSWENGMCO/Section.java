@@ -15,7 +15,7 @@ public class Section {
     private Subject subjectId;
     private ArrayList subj = new ArrayList();
     private int check = 0;
-
+    private String[] enroll = {"CCPROG1", "CSARCH1", "LBYARCH", "CSARCH2"};
 
     Section (String sectionId, Schedule schedule, Room room, Subject subject) {
         notBlank(sectionId, "sectionId can't be null or whitespace");
@@ -25,7 +25,6 @@ public class Section {
                 "sectionId must be alphanumeric, was: " + sectionId
         );
 
-        subj.add("sweng");
 
 
         this.sectionId = sectionId;
@@ -47,20 +46,25 @@ public class Section {
                     "SubjectID " +
                             other.subjectId + "  conflict with another section");
         } else {
-            checkPrequisite(subj, this.subjectId);
-            // System.out.println("helloooooo " + this.subjectId);
-
+            checkPrequisite(subj, enroll);
         }
     }
 
-    public void checkPrequisite (ArrayList subj, Subject subjectId)
+    public void checkPrequisite (ArrayList subj, String[] subjj)
     {
         for(int i = 0; i < subj.size(); i++)
         {
-            if (subjectId != subj.get(i))
+            for (int j = 0; j < 4; j++)
             {
-                subj.add(subjectId);
+                if (subjj[j] != subj.get(i))
+                {
+                    subj.add(subjectId);
+                } else {
+                    throw new SubjectConflictException(
+                            "Prerequisite is "  + subjj[j]);
+                }
             }
+
         }
     }
 
@@ -85,4 +89,6 @@ public class Section {
     public int hashCode() {
         return sectionId != null ? sectionId.hashCode() : 0;
     }
+
+
 }
