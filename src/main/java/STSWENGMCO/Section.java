@@ -3,6 +3,8 @@ package STSWENGMCO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
+import java.util.ArrayList;
+
 import static org.apache.commons.lang3.Validate.notBlank;
 public class Section {
 
@@ -11,6 +13,8 @@ public class Section {
     private final Schedule schedule;
     private Room room;
     private Subject subjectId;
+    private ArrayList subj = new ArrayList();
+    private int check = 0;
 
 
     Section (String sectionId, Schedule schedule, Room room, Subject subject) {
@@ -21,13 +25,15 @@ public class Section {
                 "sectionId must be alphanumeric, was: " + sectionId
         );
 
+        subj.add("sweng");
+
+
         this.sectionId = sectionId;
         this.schedule = schedule;
         this.subjectId = subject;
 
         this.room = new Room(room.getNameOfRoom(), room.getMaxCapacity());
     }
-
 
     void checkForConflict(Section other) {
         if (this.schedule.equals(other.schedule)) {
@@ -40,10 +46,25 @@ public class Section {
             throw new SubjectConflictException(
                     "SubjectID " +
                             other.subjectId + "  conflict with another section");
+        } else {
+            checkPrequisite(subj, this.subjectId);
+            // System.out.println("helloooooo " + this.subjectId);
+
         }
     }
-    public Room getRoom(){ return room; }
 
+    public void checkPrequisite (ArrayList subj, Subject subjectId)
+    {
+        for(int i = 0; i < subj.size(); i++)
+        {
+            if (subjectId != subj.get(i))
+            {
+                subj.add(subjectId);
+            }
+        }
+    }
+
+    public Room getRoom(){ return room; }
 
     @Override
     public String toString() {
