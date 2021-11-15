@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class StudentTest {
 
+
     @Test
     void enlist_two_section_no_conflict(){
         //Given
