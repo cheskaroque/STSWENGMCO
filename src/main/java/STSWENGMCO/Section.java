@@ -53,11 +53,6 @@ public class Section {
         } else {
             checkPrerequisite(subjectId);
 
-            for (int i = 0; i < subjects.size(); i++)
-            {
-                System.out.println(subjects.toString());
-                System.out.println(prerequisite.toString());
-            }
         }
     }
 

@@ -68,10 +68,4 @@ class Student {
         return studentNumber;
     }
 
-    public void subjectCOmpleted(String[] args){
-        ArrayList<String> prerequisite = new ArrayList<>();
-        prerequisite.add("CCPROG1");
-        prerequisite.add("CCPROG2");
-        prerequisite.add("CCPROG3");
-    }
 }

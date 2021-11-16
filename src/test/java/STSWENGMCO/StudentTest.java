@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,10 +14,17 @@ class StudentTest {
 
     @Test
     void enlist_two_section_no_conflict(){
+
+        Collection <Subject> prereq =new HashSet<>();
+        Subject sub1 =  new Subject("algcm");
+        Subject sub2 =  new Subject("ccprog1");
+        prereq.add(sub1);
+        prereq.add(sub2);
+
         //Given
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("SWENG"));
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK101", 3), new Subject("stweng"));
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), prereq);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK101", 3), new Subject("cssweng"), Collections.emptyList(), prereq);
         //When
 
 
@@ -35,18 +43,27 @@ class StudentTest {
     @Test
     void enlist_two_sections_same_schedule() {
         //Given
+        Collection <Subject> prereq =new HashSet<>();
+        Subject sub1 =  new Subject("algcm");
+        Subject sub2 =  new Subject("ccprog1");
+        prereq.add(sub1);
+        prereq.add(sub2);
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("SWENG"));
-        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3),new Subject("stsweng"));
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("stsweng"), Collections.emptyList(), prereq);
+        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3),new Subject("stadvdb"), Collections.emptyList(), prereq);
         //When
         student.enlist(sec1);
         //Then
         assertThrows(ScheduleConflictException.class, () -> student.enlist(sec2));
     }
+
     @Test
     void enlist_in_full_cap(){
         // Given
-        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("JK101", 5),new Subject("SWENG"));
+        Collection <Subject> prereq =new HashSet<>();
+        Subject sub1 =  new Subject("ccprog1");
+        prereq.add(sub1);
+        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("JK101", 5),new Subject("ccprog2"), Collections.emptyList(), prereq);
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -71,8 +88,13 @@ class StudentTest {
     @Test
     void cancel_enlist_section(){
         //Given
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("CCPROG2"));
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK107", 3),new Subject("CCPROG1"));
+        Collection <Subject> prereq =new HashSet<>();
+        Subject sub1 =  new Subject("algcm");
+        Subject sub2 =  new Subject("ccprog1");
+        prereq.add(sub1);
+        prereq.add(sub2);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("ccprog2"), Collections.emptyList(), prereq);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK107", 3),new Subject("ccprog3"), Collections.emptyList(), prereq);
         Student student =  new Student(1);
         //When
         student.enlist(sec1);
@@ -87,7 +109,10 @@ class StudentTest {
     @Test
     void enlist_section_with_slots_left(){
         // Given
-        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("CCPROG1"));
+        Collection <Subject> prereq =new HashSet<>();
+        Subject sub1 =  new Subject("ccprog1");
+        prereq.add(sub1);
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(), prereq);
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -113,10 +138,15 @@ class StudentTest {
     @Test
     void enlist_students_at_capacity_in_two_sections_sharing_the_same_room() {
         // Given 2 sections that share same room w/ capacity 1, and 2 students
+        Collection <Subject> prereq =new HashSet<>();
+        Subject sub1 =  new Subject("algcm");
+        Subject sub2 =  new Subject("ccprog1");
+        prereq.add(sub1);
+        prereq.add(sub2);
         final int CAPACITY = 1;
         Room room = new Room("SEC11", CAPACITY);
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("SWENG"));
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H0830), new Room("JK101", 3), new Subject("SWENG"));
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), prereq);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H0830), new Room("JK101", 3), new Subject("csarch1"), Collections.emptyList(), prereq);
         Student student1 = new Student(1);
         Student student2 = new Student(2);
         // When each student enlists in a different section
