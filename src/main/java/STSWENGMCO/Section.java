@@ -4,29 +4,29 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 import static org.apache.commons.lang3.Validate.notBlank;
 public class Section {
+
 
 
     private final String sectionId;
     private final Schedule schedule;
     private Room room;
     private Subject subjectId;
-    private ArrayList subj = new ArrayList();
-    private int check = 0;
-    private String[] enroll = {"CCPROG1", "CSARCH1", "LBYARCH", "CSARCH2"};
+    private Collection<Subject> subjects =new HashSet<>();
+    private Collection<Subject> prerequisite =new HashSet<>();
 
-    Section (String sectionId, Schedule schedule, Room room, Subject subject) {
+    Section (String sectionId, Schedule schedule, Room room, Subject subject,  Collection <Subject> subjects, Collection <Subject> prerequisite) {
         notBlank(sectionId, "sectionId can't be null or whitespace");
-
-
         Validate.isTrue(StringUtils.isAlphanumeric(sectionId),
                 "sectionId must be alphanumeric, was: " + sectionId
         );
 
-
-
+        this.prerequisite = prerequisite;
+        this.subjects.addAll(subjects);
         this.sectionId = sectionId;
         this.schedule = schedule;
         this.subjectId = subject;
@@ -41,32 +41,38 @@ public class Section {
                             other + "at schedule" + this.schedule);
         }
 
+        Subject a =  new Subject("ccprog1");
+        Subject b =  new Subject("algcm");
+        subjects.add(a);
+        subjects.add(b);
+
         if (this.subjectId.equals(other.subjectId)) {
             throw new SubjectConflictException(
                     "SubjectID " +
                             other.subjectId + "  conflict with another section");
         } else {
-            checkPrequisite(subj, enroll);
-        }
-    }
+            checkPrerequisite(subjectId);
 
-    public void checkPrequisite (ArrayList subj, String[] subjj)
-    {
-        for(int i = 0; i < subj.size(); i++)
-        {
-            for (int j = 0; j < 4; j++)
+            for (int i = 0; i < subjects.size(); i++)
             {
-                if (subjj[j] != subj.get(i))
-                {
-                    subj.add(subjectId);
-                } else {
-                    throw new SubjectConflictException(
-                            "Prerequisite is "  + subjj[j]);
-                }
+                System.out.println(subjects.toString());
+                System.out.println(prerequisite.toString());
             }
-
         }
     }
+
+
+    public void checkPrerequisite (Subject subjectId){
+        if (subjects.containsAll(prerequisite)) {
+            subjects.add(subjectId);
+        }
+        else {
+            throw new SubjectConflictException(
+                    "Prerequisite subjects not yet taken for subject ID " +
+                            subjectId);
+        }
+    }
+
 
     public Room getRoom(){ return room; }
 
@@ -89,6 +95,5 @@ public class Section {
     public int hashCode() {
         return sectionId != null ? sectionId.hashCode() : 0;
     }
-
 
 }
