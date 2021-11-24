@@ -21,7 +21,7 @@ class Section {
     private Collection<Subject> prerequisite =new HashSet<>();
     private final ReentrantLock lock = new ReentrantLock();
 
-    Section (String sectionId, Schedule schedule, Room room, Subject subject,  Collection <Subject> subjects, Collection <Subject> prerequisite, int numberOfStudents) {
+    Section (String sectionId, Schedule schedule, Room room, Subject subject,  Collection <Subject> subjects, int numberOfStudents) {
         notBlank(sectionId, "sectionId can't be null or whitespace");
         isTrue(StringUtils.isAlphanumeric(sectionId),
                 "sectionId must be alphanumeric, was: " + sectionId
@@ -73,6 +73,9 @@ class Section {
         numberOfStudents++;
     }
 
+    int getNumberOfStudents(){
+        return numberOfStudents;
+    }
     public Room getRoom(){ return room; }
 
     @Override

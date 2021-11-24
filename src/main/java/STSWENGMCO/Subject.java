@@ -35,7 +35,7 @@ public class Subject {
         if (!listSubjectsTaken.containsAll(prerequisites)) {
             Collection<Subject> PrereqsCopy = new HashSet<>(prerequisites);
             PrereqsCopy.removeAll(listSubjectsTaken);
-            throw new SubjectConflictException(
+            throw new PreReqMissingException(
                     "ERROR! Missing prerequisites: " + PrereqsCopy);
         }
     }
