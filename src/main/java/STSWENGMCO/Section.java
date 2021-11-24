@@ -1,9 +1,7 @@
 package STSWENGMCO;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Validate;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.concurrent.locks.*;
@@ -40,11 +38,6 @@ class Section {
         this.numberOfStudents = numberOfStudents;
     }
 
-//    Section(String sectionId, Subject subject, Schedule schedule, Room room, int numberOfStudents){
-//        this(sectionId, subject, schedule, room);
-//        isTrue(numberOfStudents >= 0, "numberOfStudents must be non-negative, was: " + numberOfStudents);
-//        this.numberOfStudents = numberOfStudents;
-//    }
 
     void checkForConflict(Section other) {
         if (this.schedule.equals(other.schedule)) {
@@ -53,11 +46,6 @@ class Section {
                             + " and new section" +
                             other + "at schedule" + this.schedule);
         }
-
-//        Subject a =  new Subject("ccprog1");
-//        Subject b =  new Subject("algcm");
-//        subjects.add(a);
-//        subjects.add(b);
 
         if (this.subjectId.equals(other.subjectId)) {
             throw new SubjectConflictException(
