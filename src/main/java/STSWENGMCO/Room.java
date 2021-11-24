@@ -10,6 +10,7 @@ public class Room {
     private final int maxCap;
     private int currCap;
 
+
     public Room(String nameOfRoom, int maxCap) {
         notBlank(nameOfRoom, "Please provide room name. Room name cannot be left blank");
         Validate.isTrue(StringUtils.isAlphanumeric(nameOfRoom),"Room Name must be in alphanumeric, was: " + nameOfRoom);
@@ -46,6 +47,7 @@ public class Room {
             throw new RuntimeException("Warning: Full Capacity!");
         }
     }
+
 
     public String getNameOfRoom(){
         return nameOfRoom;

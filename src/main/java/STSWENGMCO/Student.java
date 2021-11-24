@@ -36,7 +36,13 @@ class Student {
         newSection.checkPrereqSubjects(subjects);
         sections.add(newSection);
         newSection.getRoom().addToRoom();
-
+        newSection.lock();
+        try{
+            newSection.incrementNumberOfStudents();
+            sections.add(newSection);
+        }finally {
+            newSection.unlock();
+        }
     }
 
     void cancelEnlist(Section enlistedSection) {

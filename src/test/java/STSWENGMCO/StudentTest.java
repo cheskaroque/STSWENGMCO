@@ -23,8 +23,8 @@ class StudentTest {
 
         //Given
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), prereq);
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK101", 3), new Subject("cssweng"), Collections.emptyList(), prereq);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), prereq, 2);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK101", 3), new Subject("cssweng"), Collections.emptyList(), prereq, 2);
         //When
 
 
@@ -49,8 +49,8 @@ class StudentTest {
         prereq.add(sub1);
         prereq.add(sub2);
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("stsweng"), Collections.emptyList(), prereq);
-        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3),new Subject("stadvdb"), Collections.emptyList(), prereq);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("stsweng"), Collections.emptyList(), prereq, 2);
+        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3),new Subject("stadvdb"), Collections.emptyList(), prereq,2);
         //When
         student.enlist(sec1);
         //Then
@@ -63,7 +63,7 @@ class StudentTest {
         Collection <Subject> prereq =new HashSet<>();
         Subject sub1 =  new Subject("ccprog1");
         prereq.add(sub1);
-        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("JK101", 5),new Subject("ccprog2"), Collections.emptyList(), prereq);
+        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("JK101", 5),new Subject("ccprog2"), Collections.emptyList(), prereq,2);
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -93,8 +93,8 @@ class StudentTest {
         Subject sub2 =  new Subject("ccprog1");
         prereq.add(sub1);
         prereq.add(sub2);
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("ccprog2"), Collections.emptyList(), prereq);
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK107", 3),new Subject("ccprog3"), Collections.emptyList(), prereq);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("ccprog2"), Collections.emptyList(), prereq,2);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK107", 3),new Subject("ccprog3"), Collections.emptyList(), prereq, 2);
         Student student =  new Student(1);
         //When
         student.enlist(sec1);
@@ -112,7 +112,7 @@ class StudentTest {
         Collection <Subject> prereq =new HashSet<>();
         Subject sub1 =  new Subject("ccprog1");
         prereq.add(sub1);
-        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(), prereq);
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(), prereq, 2);
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -145,8 +145,8 @@ class StudentTest {
         prereq.add(sub2);
         final int CAPACITY = 1;
         Room room = new Room("SEC11", CAPACITY);
-        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), prereq);
-        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H0830), new Room("JK101", 3), new Subject("csarch1"), Collections.emptyList(), prereq);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), prereq,2);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H0830), new Room("JK101", 3), new Subject("csarch1"), Collections.emptyList(), prereq, 2);
         Student student1 = new Student(1);
         Student student2 = new Student(2);
         // When each student enlists in a different section
