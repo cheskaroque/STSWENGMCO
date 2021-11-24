@@ -33,7 +33,7 @@ class Student {
         notNull(sections, "Section can't be null");
         sections.forEach( currSection -> currSection.checkForConflict(newSection));
         newSection.getRoom().checkRoomCapacity();
-        newSection.checkPrereqSubjects(subjects);
+        newSection.checkPrereqSubjects(Section.subjects);
         sections.add(newSection);
         newSection.getRoom().addToRoom();
         newSection.lock();

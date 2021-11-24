@@ -15,10 +15,6 @@ class StudentTest {
     @Test
     void enlist_two_section_no_conflict(){
 
-        Subject sub1 =  new Subject("algcm");
-        Subject sub2 =  new Subject("ccprog1");
-
-
         //Given
         Student student = new Student(1, Collections.emptyList());
         Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(),  2);
@@ -42,9 +38,6 @@ class StudentTest {
     void enlist_two_sections_same_schedule() {
         //Given
 
-        Subject sub1 =  new Subject("algcm");
-        Subject sub2 =  new Subject("ccprog1");
-
         Student student = new Student(1, Collections.emptyList());
         Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("stsweng"), Collections.emptyList(),  2);
         Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3),new Subject("stadvdb"), Collections.emptyList(), 2);
@@ -57,7 +50,6 @@ class StudentTest {
     @Test
     void enlist_in_full_cap(){
         // Given
-        Subject sub1 =  new Subject("ccprog1");
 
         Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("JK101", 5),new Subject("ccprog2"), Collections.emptyList(), 2);
 
@@ -85,9 +77,6 @@ class StudentTest {
     void cancel_enlist_section(){
         //Given
 
-        Subject sub1 =  new Subject("algcm");
-        Subject sub2 =  new Subject("ccprog1");
-
         Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("ccprog2"), Collections.emptyList(),2);
         Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK107", 3),new Subject("ccprog3"), Collections.emptyList(),  2);
         Student student =  new Student(1);
@@ -104,8 +93,6 @@ class StudentTest {
     @Test
     void enlist_section_with_slots_left(){
         // Given
-
-        Subject sub1 =  new Subject("ccprog1");
 
         Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(),  2);
 
@@ -134,11 +121,6 @@ class StudentTest {
     void enlist_students_at_capacity_in_two_sections_sharing_the_same_room() {
         // Given 2 sections that share same room w/ capacity 1, and 2 students
 
-//        Subject sub1 =  new Subject("algcm");
-//        Subject sub2 =  new Subject("ccprog1");
-
-        final int CAPACITY = 1;
-        Room room = new Room("SEC11", CAPACITY);
         Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), 2);
         Section sec2 = new Section("B", new Schedule(Days.TF, Period.H0830), new Room("JK101", 3), new Subject("csarch1"), Collections.emptyList(), 2);
         Student student1 = new Student(1);
@@ -155,9 +137,9 @@ class StudentTest {
         Subject prereq2 = new Subject("prereq2");
         Subject subject = new Subject("subject", List.of(prereq1, prereq2));
         Subject otherSubject = new Subject("otherSubject");
-        List<Subject> subjectsTaken = List.of(prereq1, prereq2, otherSubject);
+        List<Subject> subjectsTaken = List.of(prereq1,prereq2, otherSubject);
         Student student = new Student(1);
-        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(),  1);
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),subject, subjectsTaken,  1);
         // When student enlists
         student.enlist(sec);
         // Then enlistment is successful

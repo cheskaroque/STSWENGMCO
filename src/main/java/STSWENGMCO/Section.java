@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.concurrent.locks.*;
 
 import static org.apache.commons.lang3.Validate.*;
@@ -17,17 +18,17 @@ class Section {
     private Room room;
     private Subject subjectId;
     private int numberOfStudents;
-    private Collection<Subject> subjects =new HashSet<>();
+    public static Collection<Subject> subjects =new HashSet<>();
     private Collection<Subject> prerequisite =new HashSet<>();
     private final ReentrantLock lock = new ReentrantLock();
 
-    Section (String sectionId, Schedule schedule, Room room, Subject subject,  Collection <Subject> subjects, int numberOfStudents) {
+    Section (String sectionId, Schedule schedule, Room room, Subject subject, Collection <Subject> subjects, int numberOfStudents) {
         notBlank(sectionId, "sectionId can't be null or whitespace");
         isTrue(StringUtils.isAlphanumeric(sectionId),
                 "sectionId must be alphanumeric, was: " + sectionId
         );
 
-        this.prerequisite = prerequisite;
+        //this.prerequisite = prerequisite;
         this.subjects.addAll(subjects);
         this.sectionId = sectionId;
         this.schedule = schedule;
