@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import static org.apache.commons.lang3.Validate.notBlank;
+import static org.apache.commons.lang3.Validate.notNull;
+
 public class Section {
 
 
@@ -37,35 +39,28 @@ public class Section {
     void checkForConflict(Section other) {
         if (this.schedule.equals(other.schedule)) {
             throw new ScheduleConflictException(
-                    "schedule conflict between current section" + this + " and new section" +
+                    "schedule conflict between current section" + this
+                            + " and new section" +
                             other + "at schedule" + this.schedule);
         }
 
-        Subject a =  new Subject("ccprog1");
-        Subject b =  new Subject("algcm");
-        subjects.add(a);
-        subjects.add(b);
+//        Subject a =  new Subject("ccprog1");
+//        Subject b =  new Subject("algcm");
+//        subjects.add(a);
+//        subjects.add(b);
 
         if (this.subjectId.equals(other.subjectId)) {
             throw new SubjectConflictException(
                     "SubjectID " +
                             other.subjectId + "  conflict with another section");
-        } else {
-            checkPrerequisite(subjectId);
-
         }
     }
 
 
-    public void checkPrerequisite (Subject subjectId){
-        if (subjects.containsAll(prerequisite)) {
-            subjects.add(subjectId);
-        }
-        else {
-            throw new SubjectConflictException(
-                    "Prerequisite subjects not yet taken for subject ID " +
-                            subjectId);
-        }
+    void checkPrereqSubjects(Collection<Subject> subjectsTaken) {
+        notNull(subjectsTaken);
+        Collection<Subject> copy = new HashSet<>(subjectsTaken);
+        subjectId.checkPrerequisites(copy);
     }
 
 

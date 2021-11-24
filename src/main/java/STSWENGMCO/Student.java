@@ -30,9 +30,10 @@ class Student {
     }
 
     void enlist  (Section newSection) {
-        notNull(sections, "student can't be null");
+        notNull(sections, "Section can't be null");
         sections.forEach( currSection -> currSection.checkForConflict(newSection));
         newSection.getRoom().checkRoomCapacity();
+        newSection.checkPrereqSubjects(subjects);
         sections.add(newSection);
         newSection.getRoom().addToRoom();
 
