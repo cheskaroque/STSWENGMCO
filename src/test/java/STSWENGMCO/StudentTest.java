@@ -134,8 +134,8 @@ class StudentTest {
     void enlist_students_at_capacity_in_two_sections_sharing_the_same_room() {
         // Given 2 sections that share same room w/ capacity 1, and 2 students
 
-        Subject sub1 =  new Subject("algcm");
-        Subject sub2 =  new Subject("ccprog1");
+//        Subject sub1 =  new Subject("algcm");
+//        Subject sub2 =  new Subject("ccprog1");
 
         final int CAPACITY = 1;
         Room room = new Room("SEC11", CAPACITY);
@@ -176,10 +176,11 @@ class StudentTest {
         Subject prereq4 = new Subject("prereq4");
         Subject subject = new Subject("subject", List.of(prereq1, prereq2, prereq3, prereq4));
         Subject othersubject = new Subject("othersubject");
-        List<Subject> subjects = List.of(prereq1, prereq2, othersubject);
+        List<Subject> FinishedSubjects = List.of(prereq1, prereq2, othersubject);
         Student student = new Student(1);
-        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(), 1);
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),subject, FinishedSubjects, 1);
 
-//        assertThrows(PreReqMissingException.class, () -> student.enlist(sec));
+        assertThrows(PreReqMissingException.class,
+                () -> student.enlist(sec));
     }
 }
