@@ -21,3 +21,5 @@ final def var = dependencies {
     implementation("org.apache.commons:commons-lang3:3.12.0")
 }
 var
+sourceCompatibility = JavaVersion.VERSION_1_9
+targetCompatibility = JavaVersion.VERSION_1_9

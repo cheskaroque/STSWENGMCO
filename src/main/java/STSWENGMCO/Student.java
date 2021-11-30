@@ -9,7 +9,6 @@ class Student {
 
     private final int studentNumber;
     private final Collection <Section> sections =new HashSet<>();
-    private final Collection <Subject> subjects =new HashSet<>();
 
     Student (int studentNumber, Collection <Section> sections) {
         isTrue(studentNumber >= 0,"studentNumber cannot be negative, was:" + studentNumber);
@@ -24,7 +23,6 @@ class Student {
         this.sections.removeIf(Objects::isNull);
     }
 
-
     Student(int studentNumber) {
         this(studentNumber, Collections.emptyList());
     }
@@ -34,6 +32,7 @@ class Student {
         sections.forEach( currSection -> currSection.checkForConflict(newSection));
         newSection.getRoom().checkRoomCapacity();
         newSection.checkPrereqSubjects(Section.subjects);
+        newSection.checkPeriods(Schedule.startTime, Schedule.endTime);
         sections.add(newSection);
         newSection.getRoom().addToRoom();
         newSection.lock();

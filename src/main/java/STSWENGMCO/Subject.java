@@ -2,8 +2,6 @@ package STSWENGMCO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -28,13 +26,13 @@ public class Subject {
         this(subjectId, Collections.emptyList());
     }
 
-
     void checkPrerequisites(Collection<Subject> prereqSubjsTaken) {
         notNull(prereqSubjsTaken);
         Collection<Subject> listSubjectsTaken = new HashSet<>(prereqSubjsTaken);
         if (!listSubjectsTaken.containsAll(prerequisites)) {
             Collection<Subject> PrereqsCopy = new HashSet<>(prerequisites);
             PrereqsCopy.removeAll(listSubjectsTaken);
+
             throw new PreReqMissingException(
                     "ERROR! Missing prerequisites: " + PrereqsCopy);
         }

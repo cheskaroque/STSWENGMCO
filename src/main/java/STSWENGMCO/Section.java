@@ -2,6 +2,7 @@ package STSWENGMCO;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -11,12 +12,14 @@ import static org.apache.commons.lang3.Validate.*;
 
 class Section {
 
-
-
+    public static String startTime;
+    //public static String startTime;
     private final String sectionId;
-    private final Schedule schedule;
+    private Schedule schedule;
     private Room room;
     private Subject subjectId;
+    //private String startTime;
+    public static String endTime;
     private int numberOfStudents;
     public static Collection<Subject> subjects =new HashSet<>();
     private Collection<Subject> prerequisite =new HashSet<>();
@@ -43,9 +46,9 @@ class Section {
     void checkForConflict(Section other) {
         if (this.schedule.equals(other.schedule)) {
             throw new ScheduleConflictException(
-                    "schedule conflict between current section" + this
-                            + " and new section" +
-                            other + "at schedule" + this.schedule);
+                    "schedule conflict between current section " + this
+                            + " and new section " +
+                            other + " at schedule " + this.schedule + " " + other.schedule);
         }
 
         if (this.subjectId.equals(other.subjectId)) {
@@ -55,11 +58,21 @@ class Section {
         }
     }
 
-
     void checkPrereqSubjects(Collection<Subject> subjectsTaken) {
         notNull(subjectsTaken);
         Collection<Subject> copy = new HashSet<>(subjectsTaken);
         subjectId.checkPrerequisites(copy);
+
+    }
+
+    void checkPeriods (String startTime, String endTime ) {
+        notBlank(startTime);
+        notBlank(endTime);
+        try {
+            schedule.checkPeriodDuration(startTime, endTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     void lock(){
