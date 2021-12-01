@@ -221,6 +221,19 @@ class StudentTest {
 
     }
 
+    @Test
+    void period_duration_of_30_increment() {
+
+        //When the period has a duration of 30-min increments, w/in the hours of 8:30am - 5:30pm.
+        LocalTime periodStart = LocalTime.of(8, 30);
+        LocalTime periodEnd = LocalTime.of(9, 00);
+
+        ClassPeriod format = new ClassPeriod(periodStart, periodEnd);
+        //Then an exception should be thrown
+        format.checkPeriod(periodStart, periodEnd);
+
+    }
+
 
 
 }

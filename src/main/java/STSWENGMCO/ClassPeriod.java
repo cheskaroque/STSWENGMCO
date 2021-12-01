@@ -63,6 +63,13 @@ public class ClassPeriod {
             throw new ScheduleConflictException("Time doesn't follow the condition for end time: " +
                     end.toString());
         }
+
+        LocalTime compareTime = end.minusMinutes(30);
+
+        //Check if there is a 30 minute increment on the starting time
+        if (compareTime.isBefore(start) == true) {
+            throw new ScheduleConflictException("Period does not have a 30 minute increment duration or more with the start time at " + start.toString() +"and end time at " + end.toString() );
+        }
     }
 
 
