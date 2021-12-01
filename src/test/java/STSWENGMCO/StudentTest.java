@@ -206,8 +206,17 @@ class StudentTest {
 
     }
 
+    @Test
+    void period_time_not_following_format() {
 
+        //When the start and end minutes are not equal to 00 or 30
+        LocalTime periodStart = LocalTime.of(8, 10);
+        LocalTime periodEnd = LocalTime.of(9, 00);
 
+        //Then an exception should be thrown
+        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+
+    }
 
 
 }

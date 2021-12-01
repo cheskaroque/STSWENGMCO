@@ -48,6 +48,15 @@ public class ClassPeriod {
                     end);
         }
 
+        //Check if period begins and end at either top of each hour (10:00, 14:00) or end of each hour (12:30, 16:30)
+        if (!(start.getMinute() == 30 || start.getMinute() == 0)) {
+            throw new ScheduleConflictException("Time doesn't follow the condition for start time: " +
+                    start.toString());
+        } else if (!(end.getMinute() == 30 || end.getMinute() == 0)){
+            throw new ScheduleConflictException("Time doesn't follow the condition for end time: " +
+                    end.toString());
+        }
+
 
     }
 
