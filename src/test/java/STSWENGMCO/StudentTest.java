@@ -210,13 +210,24 @@ class StudentTest {
     void period_time_not_following_format() {
 
         //When the start and end minutes are not equal to 00 or 30
-        LocalTime periodStart = LocalTime.of(8, 10);
-        LocalTime periodEnd = LocalTime.of(9, 00);
+        LocalTime periodStart = LocalTime.of(10, 00);
+        LocalTime periodEnd = LocalTime.of(11, 10);
 
         //Then an exception should be thrown
         assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+    }
+
+    @Test
+    void period_overlap(){
+        LocalTime periodStart1 = LocalTime.of(10, 30);
+        LocalTime periodEnd1 = LocalTime.of(14, 30);
+        LocalTime periodStart2 = LocalTime.of(15,30);
+        LocalTime periodEnd2 = LocalTime.of(16, 30);
+        ClassPeriod mySched = new ClassPeriod(periodStart1, periodStart2);
+        mySched.checkSame(periodStart1, periodStart2, periodEnd1, periodEnd2);
 
     }
+
 
 
 }

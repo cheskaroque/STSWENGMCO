@@ -60,6 +60,25 @@ public class ClassPeriod {
 
     }
 
+    public void checkSame(LocalTime start1, LocalTime start2, LocalTime end1, LocalTime end2){
+
+        // validate
+        if (end1.isBefore(start1)) {
+            throw new ScheduleConflictException("end1 " + end1 + " must not be before begin1 " + start1);
+        }
+
+        // validate
+        if (end2.isBefore(start2)) {
+            throw new ScheduleConflictException("end2 " + end2 + " must not be before begin2 " + start2);
+        }
+
+        if (end2.isAfter(start1) && end1.isAfter(start2)) {
+            throw  new ScheduleConflictException("Schedule overlaps in time " + end1 + " and " + end2);
+        } else {
+
+        }
+    }
+
     @Override
     public String toString() {
         return "Start: " + start.toString() + " End: " + end.toString();
