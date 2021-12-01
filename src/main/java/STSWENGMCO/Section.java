@@ -65,7 +65,7 @@ class Section {
 
     }
 
-    void checkPeriods (String startTime, String endTime ) {
+   /* void checkPeriods (String startTime, String endTime ) {
         notBlank(startTime);
         notBlank(endTime);
         try {
@@ -73,7 +73,7 @@ class Section {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     void lock(){
         lock.lock();

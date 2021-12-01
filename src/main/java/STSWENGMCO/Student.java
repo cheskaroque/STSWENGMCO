@@ -32,7 +32,6 @@ class Student {
         sections.forEach( currSection -> currSection.checkForConflict(newSection));
         newSection.getRoom().checkRoomCapacity();
         newSection.checkPrereqSubjects(Section.subjects);
-        newSection.checkPeriods(Schedule.startTime, Schedule.endTime);
         sections.add(newSection);
         newSection.getRoom().addToRoom();
         newSection.lock();

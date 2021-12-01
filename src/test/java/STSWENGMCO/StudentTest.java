@@ -2,6 +2,7 @@ package STSWENGMCO;
 
 import org.junit.jupiter.api.*;
 
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,8 +18,8 @@ class StudentTest {
 
         //Given
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Schedule.Days.MTH, "11:00:00", "12:30:00"), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(),  2);
-        Section sec2 = new Section("B", new Schedule(Schedule.Days.TF, "11:00:00", "12:30:00"), new Room("JK101", 3), new Subject("cssweng"), Collections.emptyList(), 2);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(),  2);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK101", 3), new Subject("cssweng"), Collections.emptyList(), 2);
         //When
 
 
@@ -39,8 +40,8 @@ class StudentTest {
         //Given
 
         Student student = new Student(1, Collections.emptyList());
-        Section sec1 = new Section("A", new Schedule(Schedule.Days.MTH,"11:00:00", "12:30:00"), new Room("JK101", 3),new Subject("stsweng"), Collections.emptyList(),  2);
-        Section sec2 = new Section("B", new Schedule(Schedule.Days.MTH, "11:00:00", "12:30:00"), new Room("JK107", 3),new Subject("stadvdb"), Collections.emptyList(), 2);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("stsweng"), Collections.emptyList(),  2);
+        Section sec2 = new Section("B", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3),new Subject("stadvdb"), Collections.emptyList(), 2);
         //When
         student.enlist(sec1);
         //Then
@@ -51,7 +52,7 @@ class StudentTest {
     void enlist_in_full_cap(){
         // Given
 
-        Section sec = new Section("A", new Schedule(Schedule.Days.MTH,"11:00:00", "12:30:00"), new Room("JK101", 5),new Subject("ccprog2"), Collections.emptyList(), 2);
+        Section sec = new Section("A", new Schedule(Days.MTH,Period.H0830), new Room("JK101", 5),new Subject("ccprog2"), Collections.emptyList(), 2);
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -77,8 +78,8 @@ class StudentTest {
     void cancel_enlist_section(){
         //Given
 
-        Section sec1 = new Section("A", new Schedule(Schedule.Days.MTH, "11:00:00", "12:30:00"), new Room("JK101", 3),new Subject("ccprog2"), Collections.emptyList(),2);
-        Section sec2 = new Section("B", new Schedule(Schedule.Days.TF, "11:00:00", "12:30:00"), new Room("JK107", 3),new Subject("ccprog3"), Collections.emptyList(),  2);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK101", 3),new Subject("ccprog2"), Collections.emptyList(),2);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H1000), new Room("JK107", 3),new Subject("ccprog3"), Collections.emptyList(),  2);
         Student student =  new Student(1);
         //When
         student.enlist(sec1);
@@ -94,7 +95,7 @@ class StudentTest {
     void enlist_section_with_slots_left(){
         // Given
 
-        Section sec = new Section("A", new Schedule(Schedule.Days.TF,"11:00:00", "12:30:00"), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(),  2);
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),new Subject("ccprog2"), Collections.emptyList(),  2);
 
         Student student1 = new Student(1);
         Student student2 = new Student(2);
@@ -121,8 +122,8 @@ class StudentTest {
     void enlist_students_at_capacity_in_two_sections_sharing_the_same_room() {
         // Given 2 sections that share same room w/ capacity 1, and 2 students
 
-        Section sec1 = new Section("A", new Schedule(Schedule.Days.MTH, "11:00:00", "12:30:00"), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), 2);
-        Section sec2 = new Section("B", new Schedule(Schedule.Days.TF, "11:00:00", "12:30:00"), new Room("JK101", 3), new Subject("csarch1"), Collections.emptyList(), 2);
+        Section sec1 = new Section("A", new Schedule(Days.MTH, Period.H0830), new Room("JK107", 3), new Subject("ccprog2"), Collections.emptyList(), 2);
+        Section sec2 = new Section("B", new Schedule(Days.TF, Period.H0830), new Room("JK101", 3), new Subject("csarch1"), Collections.emptyList(), 2);
         Student student1 = new Student(1);
         Student student2 = new Student(2);
         // When each student enlists in a different section
@@ -139,7 +140,7 @@ class StudentTest {
         Subject otherSubject = new Subject("otherSubject");
         List<Subject> subjectsTaken = List.of(prereq1,prereq2, otherSubject);
         Student student = new Student(1);
-        Section sec = new Section("A", new Schedule(Schedule.Days.TF,"11:00:00", "12:30:00"), new Room("JK101", 7),subject, subjectsTaken,  1);
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),subject, subjectsTaken,  1);
         // When student enlists
         student.enlist(sec);
         // Then enlistment is successful
@@ -159,30 +160,52 @@ class StudentTest {
         Subject subject = new Subject("subject", List.of(prereq1, prereq2, prereq3, prereq4));
         Subject othersubject = new Subject("othersubject");
         List<Subject> FinishedSubjects = List.of(prereq1, prereq2, othersubject);
-        Collection<String> periods = List.of("11:00:00", "12:30:00");
         Student student = new Student(1);
-        Section sec = new Section("A", new Schedule(Schedule.Days.TF, "11:00:00", "12:30:00"), new Room("JK101", 7),subject, FinishedSubjects, 1);
-        Section sec1 = new Section("A", new Schedule(Schedule.Days.TF, "11:00:00", "12:30:00"), new Room("JK101", 7),subject, FinishedSubjects, 1);
-
+        Section sec = new Section("A", new Schedule(Days.TF,Period.H1430), new Room("JK101", 7),subject, FinishedSubjects, 1);
 
         assertThrows(PreReqMissingException.class,
                 () -> student.enlist(sec));
     }
 
-//    @Test
-//    void enlist_section_schedule_overlap() {
-//
-//        Schedule schedule2 = new Schedule(Schedule.Days.TF, "11:00:00", "12:30:00");
-//        Schedule schedule1 = new Schedule(Schedule.Days.TF, "14:30:00", "15:30:00");
-//        Student student = new Student(1);
-//        Section sec1 = new Section("A", schedule1, new Room("JK101", 7), new Subject("CCPROG1"), Collections.emptyList(), 2);
-//        Section sec2 = new Section("A", schedule2, new Room("JK101", 7), new Subject("CCPROG2"), Collections.emptyList(), 2);
-//
-//        Assertions.assertAll(
-//                ()-> student.enlist(sec1),
-//                ()-> student.enlist(sec2)
-//        );
-//    }
+    @Test
+    void periods_beyond_duration_time() {
+
+        //When period time is not within 8:30 am - 5:30pm
+        LocalTime periodStart = LocalTime.of(7, 10);
+        LocalTime periodEnd = LocalTime.of(12, 30);
+
+
+        //Then an exception should be thrown
+        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+
+    }
+
+    @Test
+    void same_startTime_endTime() {
+
+        //When the end time or start time are the same
+        LocalTime periodStart = LocalTime.of(11, 30);
+        LocalTime periodEnd = LocalTime.of(11, 30);
+
+
+        //Then an exception should be thrown
+        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+
+    }
+
+    @Test
+    void startTime_after_endTime() {
+
+        //When start time is after end time
+        LocalTime periodStart = LocalTime.of(12, 00);
+        LocalTime periodEnd = LocalTime.of(11, 00);
+
+
+        //Then an exception should be thrown
+        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+
+    }
+
 
 
 
