@@ -201,7 +201,7 @@ class StudentTest {
     }
 
     @Test
-    void period_time_not_following_format() {
+    void period_time_check_minute() {
         //When the start and end minutes are not equal to 00 or 30
         LocalTime periodStart = LocalTime.of(10, 00);
         LocalTime periodEnd = LocalTime.of(11, 30);
