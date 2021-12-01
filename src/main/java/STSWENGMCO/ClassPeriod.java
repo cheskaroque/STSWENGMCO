@@ -20,15 +20,13 @@ public class ClassPeriod {
     }
 
     void checkPeriod(LocalTime start, LocalTime end){
-
         //Check if within 8:30 am - 5:30 pm
-       if (!start.isAfter(periodStart) || !start.isBefore(periodEnd)) {
-           throw new ScheduleConflictException("Time not within valid start time: " +
-                   start);
-       } else if (!end.isBefore(periodEnd) || !end.isAfter(periodStart)) {
-           throw new ScheduleConflictException("Time not within valid end time: " +
-                   end);
-       }
+        if (start.isBefore(periodStart) ) {
+            throw new ScheduleConflictException("Time not within valid start time: " + start);
+        } else if (end.isAfter(periodEnd)) {
+            throw new ScheduleConflictException("Time not within valid end time: " +
+                    end);
+        }
 
         //Check if end is after start
         if(end.isBefore(start)){
@@ -48,13 +46,15 @@ public class ClassPeriod {
                     end);
         }
 
-        //Check if period begins and end at either top of each hour (10:00, 14:00) or end of each hour (12:30, 16:30)
-        if (!(start.getMinute() == 30 || start.getMinute() == 0)) {
-            throw new ScheduleConflictException("Time doesn't follow the condition for start time: " +
-                    start.toString());
-        } else if (!(end.getMinute() == 30 || end.getMinute() == 0)){
-            throw new ScheduleConflictException("Time doesn't follow the condition for end time: " +
-                    end.toString());
+        if ((start.getMinute() == 30 || start.getMinute() == 0)) {
+           throw new ScheduleConflictException("Time not increment of 30 in start time: " +start.toString() + " and  end time: " + end.toString() );
+        }
+
+        LocalTime compareTime = end.minusMinutes(30);
+
+        //Check if there is a 30 minute increment on the periods
+        if (compareTime.isBefore(start) == false) {
+            throw new ScheduleConflictException("Period does not have a 30 minute increment duration or more with the start time at" + start.toString() +"and end time at" + end.toString() );
         }
 
 
