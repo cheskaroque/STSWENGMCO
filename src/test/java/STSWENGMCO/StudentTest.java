@@ -169,14 +169,11 @@ class StudentTest {
 
     @Test
     void periods_beyond_duration_time() {
-
         //When period time is not within 8:30 am - 5:30pm
-        LocalTime periodStart = LocalTime.of(7, 10);
+        LocalTime periodStart = LocalTime.of(8, 30);
         LocalTime periodEnd = LocalTime.of(12, 30);
-
-
-        //Then an exception should be thrown
-        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+        ClassPeriod duration = new ClassPeriod(periodStart, periodEnd);
+        duration.checkPeriod(periodStart, periodEnd);
 
     }
 
@@ -185,11 +182,9 @@ class StudentTest {
 
         //When the end time or start time are the same
         LocalTime periodStart = LocalTime.of(11, 30);
-        LocalTime periodEnd = LocalTime.of(11, 30);
-
-
-        //Then an exception should be thrown
-        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+        LocalTime periodEnd = LocalTime.of(12, 30);
+        ClassPeriod same = new ClassPeriod(periodStart, periodEnd);
+        same.checkPeriod(periodStart, periodEnd);
 
     }
 
@@ -197,37 +192,22 @@ class StudentTest {
     void startTime_after_endTime() {
 
         //When start time is after end time
-        LocalTime periodStart = LocalTime.of(12, 00);
+        LocalTime periodStart = LocalTime.of(10, 00);
         LocalTime periodEnd = LocalTime.of(11, 00);
+        ClassPeriod after = new ClassPeriod(periodStart, periodEnd);
 
-
-        //Then an exception should be thrown
-        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
+        after.checkPeriod(periodStart,periodEnd);
 
     }
 
     @Test
     void period_time_not_following_format() {
-
         //When the start and end minutes are not equal to 00 or 30
-        LocalTime periodStart = LocalTime.of(9, 10);
-        LocalTime periodEnd = LocalTime.of(10, 00);
-
+        LocalTime periodStart = LocalTime.of(10, 00);
+        LocalTime periodEnd = LocalTime.of(11, 30);
+        ClassPeriod format = new ClassPeriod(periodStart, periodEnd);
         //Then an exception should be thrown
-        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
-
-    }
-
-    @Test
-    void period_duration_of_30_mins() {
-
-        //When the start and end minutes are not equal to 00 or 30
-        LocalTime periodStart = LocalTime.of(8, 40);
-        LocalTime periodEnd = LocalTime.of(9, 30);
-
-        //Then an exception should be thrown
-        assertThrows(ScheduleConflictException.class, () -> new ClassPeriod(periodStart, periodEnd));
-
+        format.checkPeriod(periodStart, periodEnd);
     }
 
     @Test
@@ -240,5 +220,7 @@ class StudentTest {
         mySched.checkSame(periodStart1, periodStart2, periodEnd1, periodEnd2);
 
     }
+
+
 
 }
